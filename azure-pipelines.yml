@@ -1,19 +1,70 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- master
+  branches:
+    include:
+      - main
 
-pool:
-  vmImage: ubuntu-latest
+pr:
+  branches:
+    include:
+      - main
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+
+stages:
+  - stage: TerraformInit
+    jobs:
+      - job: Init
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: UseTerraform@0
+            inputs:
+              terraformVersion: $(terraformVersion)
+
+          - script: |
+              terraform init \
+                -backend-config="storage_account_name=$(storageAccount)" \
+                -backend-config="container_name=$(containerName)" \
+                -backend-config="key=$(stateFileName)" \
+                -backend-config="resource_group_name=$(resourceGroup)"
+            displayName: 'Initialize Terraform'
+
+  - stage: TerraformPlan
+    dependsOn: TerraformInit
+    jobs:
+      - job: Plan
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: UseTerraform@0
+            inputs:
+              terraformVersion: $(terraformVersion)
+
+          - script: |
+              terraform plan -out=tfplan
+            displayName: 'Terraform Plan'
+            
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: 'tfplan'
+              ArtifactName: 'tfplan'
+            displayName: 'Publish Terraform Plan'
+
+  - stage: TerraformApply
+    dependsOn: TerraformPlan
+    jobs:
+      - job: Apply
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: UseTerraform@0
+            inputs:
+              terraformVersion: $(terraformVersion)
+
+          - download: current
+            artifact: tfplan
+            displayName: 'Download Terraform Plan'
+
+          - script: |
+              terraform apply -auto-approve tfplan
+            displayName: 'Terraform Apply'
