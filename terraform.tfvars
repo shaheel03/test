@@ -23,6 +23,14 @@ rg6={
         name="rg6-jai"
         location="central india"
     }
+    rg7={
+        name="rg7-jai"
+        location="central india"
+    rg8={
+        name="rg8-jai"
+        location="central india"
     
+    
+}
 }
         
