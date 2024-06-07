@@ -9,6 +9,10 @@ rgname={
         name="rg2-jai"
         location="central india"
     }
+    rg3={
+        name="rg3-jai"
+        location="west us"
+    }
 
     
     
