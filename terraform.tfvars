@@ -13,6 +13,10 @@ rgname={
         name="rg3-jai"
         location="west us"
     }
+rg4={
+        name="rg4-jai"
+        location="east us"
+    }
 
     
     
