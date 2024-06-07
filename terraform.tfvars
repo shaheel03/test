@@ -15,7 +15,10 @@ rgname={
         name="rg4-jai"
         location="central india"
     }
-    
+    rg5={
+        name="rg5-jai"
+        location="central india"
+    }
     
 }
         
