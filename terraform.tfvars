@@ -7,30 +7,9 @@ rgname={
         name="rg2-jai"
         location="central india"
     }
-    rg3={
-        name="rg3-jai"
-        location="central india"
-    }
-    rg4={
-        name="rg4-jai"
-        location="central india"
-    }
-    rg5={
-        name="rg5-jai"
-        location="central india"
-    }
-rg6={
-        name="rg6-jai"
-        location="central india"
-    }
-    rg7={
-        name="rg7-jai"
-        location="central india"
-    rg8={
-        name="rg8-jai"
-        location="central india"
+
     
     
 }
-}
+
         
