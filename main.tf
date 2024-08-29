@@ -13,6 +13,7 @@ resource "azurerm_resource_group" "rg2" {
   location = "West Europe"
 }
 
+
 resource "azurerm_public_ip" "pip" {
     
   name                = "aarati-pip"
